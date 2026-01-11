@@ -31,18 +31,18 @@ jobs:
           docker push "$ECR_REPO_URI:$TAG"
           echo "TAG=$TAG" >> $GITHUB_ENV
 
-      - name: Checkout manifests repo
+      - name: Checkout Repo2 which has ArgoCD installed and K8s deployment files
         uses: actions/checkout@v4
         with:
-          repository: ${{ secrets.MANIFESTS_REPO }}
-          token: ${{ secrets.MANIFESTS_PAT }}
-          path: manifests
+          repository: ${{ secrets.REPO2 }}
+          token: ${{ secrets.GITHUB_PAT }}
+          path: k8s
 
-      - name: Update deployment image tag in manifests
+      - name: Update deployment image tag in Repo2
         env:
           ECR_REPO_URI: ${{ secrets.ECR_REPO_URI }}
         run: |
-          cd manifests
+          cd k8s
           # replace entire image line safely
           sed -i "s|^\(\s*image:\s*\).*|\1$ECR_REPO_URI:${TAG}|" k8s/deployment.yaml
           git config user.name "github-actions"
