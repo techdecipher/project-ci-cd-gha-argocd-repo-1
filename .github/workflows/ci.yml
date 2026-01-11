@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: ${{ secrets.REPO2 }}
-          token: ${{ secrets.GITHUB_PAT }}
+          token: ${{ secrets.GITPAT }}
           path: k8s
 
       - name: Update deployment image tag in Repo2
